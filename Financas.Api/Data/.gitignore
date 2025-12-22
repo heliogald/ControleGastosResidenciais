@@ -1,0 +1,16 @@
+# .NET
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+appsettings.Development.json
+
+# Node / React
+node_modules/
+dist/
+.env
+
+# Editor
+.vscode/
+.idea/
