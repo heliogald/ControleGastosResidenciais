@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Financas.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251222194544_InitialCreate")]
+    [Migration("20251222214452_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -90,7 +90,7 @@ namespace Financas.Api.Migrations
             modelBuilder.Entity("Financas.Api.Models.Transacao", b =>
                 {
                     b.HasOne("Financas.Api.Models.Categoria", "Categoria")
-                        .WithMany()
+                        .WithMany("Transacoes")
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -104,6 +104,11 @@ namespace Financas.Api.Migrations
                     b.Navigation("Categoria");
 
                     b.Navigation("Pessoa");
+                });
+
+            modelBuilder.Entity("Financas.Api.Models.Categoria", b =>
+                {
+                    b.Navigation("Transacoes");
                 });
 
             modelBuilder.Entity("Financas.Api.Models.Pessoa", b =>

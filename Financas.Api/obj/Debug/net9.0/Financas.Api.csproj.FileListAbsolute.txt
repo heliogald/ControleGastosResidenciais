@@ -147,3 +147,4 @@ C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\refint\Financas
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.pdb
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.genruntimeconfig.cache
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\ref\Financas.Api.dll
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.sourcelink.json

@@ -87,7 +87,7 @@ namespace Financas.Api.Migrations
             modelBuilder.Entity("Financas.Api.Models.Transacao", b =>
                 {
                     b.HasOne("Financas.Api.Models.Categoria", "Categoria")
-                        .WithMany()
+                        .WithMany("Transacoes")
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -101,6 +101,11 @@ namespace Financas.Api.Migrations
                     b.Navigation("Categoria");
 
                     b.Navigation("Pessoa");
+                });
+
+            modelBuilder.Entity("Financas.Api.Models.Categoria", b =>
+                {
+                    b.Navigation("Transacoes");
                 });
 
             modelBuilder.Entity("Financas.Api.Models.Pessoa", b =>
