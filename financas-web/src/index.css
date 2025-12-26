@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
+:root {
+  color-scheme: dark;
+}
+
 body {
-  background-color: theme("colors.slate.900");
-  color: theme("colors.slate.100");
   margin: 0;
+  background-color: #0f172a; /* Cor fixa para teste */
+  color: white;
   font-family: sans-serif;
 }

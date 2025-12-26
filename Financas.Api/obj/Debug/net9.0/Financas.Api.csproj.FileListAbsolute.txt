@@ -1,11 +1,3 @@
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.csproj.AssemblyReference.cache
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.GeneratedMSBuildEditorConfig.editorconfig
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.AssemblyInfoInputs.cache
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.AssemblyInfo.cs
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.csproj.CoreCompileInputs.cache
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.MvcApplicationPartsAssemblyInfo.cs
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.MvcApplicationPartsAssemblyInfo.cache
 C:\Apps\ControleGastosResidenciais\Financas.Api\bin\Debug\net9.0\appsettings.Development.json
 C:\Apps\ControleGastosResidenciais\Financas.Api\bin\Debug\net9.0\appsettings.json
 C:\Apps\ControleGastosResidenciais\Financas.Api\bin\Debug\net9.0\package-lock.json
@@ -133,6 +125,15 @@ C:\Apps\ControleGastosResidenciais\Financas.Api\bin\Debug\net9.0\runtimes\win-ar
 C:\Apps\ControleGastosResidenciais\Financas.Api\bin\Debug\net9.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Apps\ControleGastosResidenciais\Financas.Api\bin\Debug\net9.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Apps\ControleGastosResidenciais\Financas.Api\bin\Debug\net9.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.csproj.AssemblyReference.cache
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.AssemblyInfoInputs.cache
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.AssemblyInfo.cs
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.csproj.CoreCompileInputs.cache
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.sourcelink.json
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -147,4 +148,3 @@ C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\refint\Financas
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.pdb
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.genruntimeconfig.cache
 C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\ref\Financas.Api.dll
-C:\Apps\ControleGastosResidenciais\Financas.Api\obj\Debug\net9.0\Financas.Api.sourcelink.json

@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace Financas.Api.Models
 {
@@ -11,11 +10,8 @@ namespace Financas.Api.Models
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Required]
+        [Required(ErrorMessage = "A descrição é obrigatória")]
         public string Descricao { get; set; } = string.Empty;
-
-        [JsonIgnore] // Isso impede o erro de "field is required" no POST
-        public Categoria? Categoria { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         [Range(0.01, double.MaxValue, ErrorMessage = "O valor deve ser positivo")]
@@ -23,17 +19,18 @@ namespace Financas.Api.Models
 
         public TipoTransacao Tipo { get; set; }
 
-        // Relacionamentos
+        // --- Categoria ---
         [Required]
         public Guid CategoriaId { get; set; }
 
-        [JsonIgnore] // Isso evita que o JSON tente validar o objeto Pessoa inteiro
-        public Pessoa? Pessoa { get; set; }       
+        // Sem JsonIgnore para que o Front-end receba os dados da categoria
+        public virtual Categoria? Categoria { get; set; }
 
+        // --- Pessoa ---
         [Required]
         public Guid PessoaId { get; set; }
-        
 
-        
+        // Sem JsonIgnore para que o Front-end receba os dados da pessoa (Nome, Idade)
+        public virtual Pessoa? Pessoa { get; set; }
     }
 }

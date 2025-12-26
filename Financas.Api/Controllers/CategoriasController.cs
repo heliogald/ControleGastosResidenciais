@@ -33,6 +33,59 @@ namespace Financas.Api.Controllers
 
             return CreatedAtAction(nameof(GetCategorias), new { id = categoria.Id }, categoria);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCategoria(Guid id, [FromBody] Categoria categoria)
+        {
+            if (id != categoria.Id)
+            {
+                return BadRequest("O ID enviado na URL não coincide com o ID do objeto.");
+            }
+
+            // Marca como modificado para o EF gerar o comando UPDATE
+            _context.Entry(categoria).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Categorias.Any(e => e.Id == id)) return NotFound();
+                throw;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Útil para identificar se há transações impedindo a mudança (ex: restrição de FK)
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCategoria(Guid id)
+        {
+            // Buscamos a categoria incluindo a contagem de transações
+            var categoria = await _context.Categorias
+                .Include(c => c.Transacoes)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (categoria == null) return NotFound("Categoria não encontrada.");
+
+            // Validação explícita: Se houver qualquer transação, impedimos a exclusão
+            if (categoria.Transacoes != null && categoria.Transacoes.Any())
+            {
+                return BadRequest("Não é possível excluir: esta categoria possui lançamentos vinculados.");
+            }
+
+            _context.Categorias.Remove(categoria);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        
      
     }
 }

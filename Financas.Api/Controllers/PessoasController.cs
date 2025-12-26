@@ -16,39 +16,59 @@ namespace Financas.Api.Controllers
             _context = context;
         }
 
-        // Listagem de pessoas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas()
         {
-            return await _context.Pessoas.ToListAsync();
+            return await _context.Pessoas.AsNoTracking().ToListAsync();
         }
 
-        // Criação de pessoa
         [HttpPost]
-        public async Task<ActionResult<Pessoa>> PostPessoa(Pessoa pessoa)
+        public async Task<ActionResult<Pessoa>> PostPessoa([FromBody] Pessoa pessoa)
         {
-            // O ID é gerado automaticamente no Model, mas garantimos que seja um novo Guid
             _context.Pessoas.Add(pessoa);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction(nameof(GetPessoas), new { id = pessoa.Id }, pessoa);
         }
 
-        // Deleção de pessoa (com regra de apagar transações vinculadas)
+        [HttpPut("{id}")]
+    public async Task<IActionResult> PutPessoa(Guid id, [FromBody] Pessoa pessoa)
+    {
+        if (id != pessoa.Id)
+        {
+            return BadRequest("ID não coincide.");
+        }
+
+        // Verifica se a pessoa existe no banco SEM rastreá-la (AsNoTracking)
+        var pessoaExiste = await _context.Pessoas.AsNoTracking().AnyAsync(p => p.Id == id);
+        if (!pessoaExiste)
+        {
+            return NotFound("Pessoa não encontrada.");
+        }
+
+        // Informa ao contexto para "anexar" e marcar como modificado
+        _context.Entry(pessoa).State = EntityState.Modified;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex)
+        {
+            // Se houver erro de banco (ex: campo obrigatório vazio), ele aparecerá aqui
+            return BadRequest(ex.InnerException?.Message ?? ex.Message);
+        }
+
+        return NoContent();
+    }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePessoa(Guid id)
         {
-            var pessoa = await _context.Pessoas
-                .Include(p => p.Transacoes) // Carrega as transações para garantir a remoção
-                .FirstOrDefaultAsync(p => p.Id == id);
-
+            var pessoa = await _context.Pessoas.FindAsync(id);
             if (pessoa == null) return NotFound();
 
-            // O Entity Framework já cuidará do Cascade Delete baseado na 
-            // configuração que fizemos no AppDbContext
             _context.Pessoas.Remove(pessoa);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
     }
