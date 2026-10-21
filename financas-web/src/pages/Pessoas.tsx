@@ -1,5 +1,7 @@
+import type { Pessoa, PessoaDados } from "../types/pessoa";
+import { mensagemErro } from "../utils/mensagemErro";
 import { useEffect, useState } from "react";
-import { pessoaService, type Pessoa } from "../services/pessoaService";
+import { pessoaService } from "../services/pessoaService";
 
 export function Pessoas() {
   const [pessoas, setPessoas] = useState<Pessoa[]>([]);
@@ -21,7 +23,7 @@ export function Pessoas() {
   }
 
   function prepararEdicao(p: Pessoa) {
-    setEditandoId(p.id!);
+    setEditandoId(p.id);
     setNome(p.nome);
     setIdade(p.idade.toString());
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -35,15 +37,14 @@ export function Pessoas() {
       return;
     }
 
-    const payload: Pessoa = {
-      id: editandoId || undefined,
+    const payload: PessoaDados = {
       nome: nome.trim(),
       idade: Number(idade),
     };
 
     try {
       if (editandoId) {
-        await pessoaService.atualizar(editandoId, payload);
+        await pessoaService.atualizar(editandoId, { ...payload, id: editandoId });
       } else {
         await pessoaService.criar(payload);
       }
@@ -53,10 +54,10 @@ export function Pessoas() {
       setIdade("");
       await carregarPessoas();
       alert("Dados salvos com sucesso!");
-    } catch (error: any) {
-      console.error("Erro detalhado:", error.response?.data);
+    } catch (error: unknown) {
+      console.error("Erro detalhado:", error);
       alert(
-        "Erro ao salvar: " + (error.response?.data || "Verifique os dados.")
+        "Erro ao salvar: " + mensagemErro(error, "Verifique os dados.")
       );
     }
   }

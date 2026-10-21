@@ -1,19 +1,12 @@
+import type { Pessoa } from "../types/pessoa";
+import type { Categoria } from "../types/categoria";
+import type { Transacao, TransacaoDados } from "../types/transacao";
+import { mensagemErro } from "../utils/mensagemErro";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
-interface Pessoa {
-  id: string;
-  nome: string;
-  idade: number;
-}
-interface Categoria {
-  id: string;
-  descricao: string;
-  finalidade: number;
-}
-
 export function Transacoes() {
-  const [transacoes, setTransacoes] = useState<any[]>([]);
+  const [transacoes, setTransacoes] = useState<Transacao[]>([]);
   const [pessoas, setPessoas] = useState<Pessoa[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
 
@@ -33,9 +26,9 @@ export function Transacoes() {
     try {
       // Busca lançamentos, pessoas e categorias simultaneamente
       const [resT, resP, resC] = await Promise.all([
-        api.get("/transacoes"),
-        api.get("/pessoas"),
-        api.get("/categoria"),
+        api.get<Transacao[]>("/transacoes"),
+        api.get<Pessoa[]>("/pessoas"),
+        api.get<Categoria[]>("/categoria"),
       ]);
       setTransacoes(resT.data);
       setPessoas(resP.data);
@@ -45,7 +38,7 @@ export function Transacoes() {
     }
   }
 
-  function prepararEdicao(t: any) {
+  function prepararEdicao(t: Transacao) {
     setEditandoId(t.id);
     setDescricao(t.descricao);
     setValor(t.valor.toString());
@@ -58,7 +51,7 @@ export function Transacoes() {
   async function handleSalvar(e: React.FormEvent) {
     e.preventDefault();
 
-    const payload = {
+    const payload: TransacaoDados & { id?: string } = {
       id: editandoId || undefined,
       descricao,
       valor: Number(valor),
@@ -77,8 +70,8 @@ export function Transacoes() {
       limparCampos();
       carregarDadosIniciais();
       alert("Lançamento salvo com sucesso!");
-    } catch (error: any) {
-      const msg = error.response?.data || "Erro ao salvar lançamento.";
+    } catch (error: unknown) {
+      const msg = mensagemErro(error, "Erro ao salvar lançamento.");
       alert(msg);
     }
   }

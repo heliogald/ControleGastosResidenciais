@@ -1,11 +1,7 @@
+import type { Categoria, CategoriaDados } from "../types/categoria";
+import { mensagemErro } from "../utils/mensagemErro";
 import { useEffect, useState } from "react";
-import api from "../services/api";
-
-interface Categoria {
-  id: string;
-  descricao: string;
-  finalidade: number;
-}
+import { categoriaService } from "../services/categoriaService";
 
 export function Categorias() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -18,7 +14,7 @@ export function Categorias() {
   }, []);
 
   async function carregarCategorias() {
-    const res = await api.get("/categoria");
+    const res = await categoriaService.listar();
     setCategorias(res.data);
   }
 
@@ -40,20 +36,20 @@ export function Categorias() {
   async function handleSalvar(e: React.FormEvent) {
     e.preventDefault();
 
-    const dados = {
-      id: editandoId || undefined,
+    const dados: CategoriaDados = {
       descricao,
       finalidade: Number(finalidade),
     };
 
     try {
       if (editandoId) {
-        // Lógica de Atualização (PUT)
-        await api.put(`/categoria/${editandoId}`, dados);
+        await categoriaService.atualizar(editandoId, {
+          ...dados,
+          id: editandoId,
+        });
         alert("Categoria atualizada com sucesso!");
       } else {
-        // Lógica de Criação (POST)
-        await api.post("/categoria", dados);
+        await categoriaService.criar(dados);
         alert("Categoria adicionada com sucesso!");
       }
 
@@ -68,13 +64,13 @@ export function Categorias() {
   async function excluirCategoria(id: string) {
     if (window.confirm("Deseja realmente excluir esta categoria?")) {
       try {
-        await api.delete(`/categoria/${id}`);
+        await categoriaService.deletar(id);
         carregarCategorias(); // Recarrega a lista após excluir
-      } catch (error: any) {
+      } catch (error: unknown) {
         // Captura a mensagem real enviada pelo Backend (BadRequest)
-        const mensagemErro = error.response?.data || "Erro interno ao excluir.";
+        const mensagem = mensagemErro(error, "Erro interno ao excluir.");
         console.error("Detalhes do erro:", error);
-        alert(`Atenção: ${mensagemErro}`);
+        alert(`Atenção: ${mensagem}`);
       }
     }
   }

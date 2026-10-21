@@ -1,3 +1,5 @@
+import type { Pessoa } from "../types/pessoa";
+import type { Transacao } from "../types/transacao";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
@@ -21,24 +23,24 @@ export function Relatorios() {
     try {
       // Buscamos as transações e as pessoas
       const [resT, resP] = await Promise.all([
-        api.get("/transacoes"),
-        api.get("/pessoas"),
+        api.get<Transacao[]>("/transacoes"),
+        api.get<Pessoa[]>("/pessoas"),
       ]);
 
       const transacoes = resT.data;
       const pessoas = resP.data;
 
       // Cálculo por pessoa
-      const relatorio = pessoas.map((pessoa: any) => {
+      const relatorio: RelatorioPessoa[] = pessoas.map((pessoa) => {
         const transacoesPessoa = transacoes.filter(
-          (t: any) => t.pessoaId === pessoa.id
+          (t) => t.pessoaId === pessoa.id
         );
         const receitas = transacoesPessoa
-          .filter((t: any) => t.tipo === 2)
-          .reduce((acc: number, t: any) => acc + t.valor, 0);
+          .filter((t) => t.tipo === 2)
+          .reduce((acc, t) => acc + t.valor, 0);
         const despesas = transacoesPessoa
-          .filter((t: any) => t.tipo === 1)
-          .reduce((acc: number, t: any) => acc + t.valor, 0);
+          .filter((t) => t.tipo === 1)
+          .reduce((acc, t) => acc + t.valor, 0);
 
         return {
           nome: pessoa.nome,
